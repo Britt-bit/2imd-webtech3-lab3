@@ -2,7 +2,7 @@ class Note {
     constructor(title) {
       this.title = title;
       this.element = this.createElement(title);
-      this.storage = this.saveToStorage;
+
     }
     
     createElement(title){
@@ -35,7 +35,13 @@ class Note {
       // HINT🤩
       // localStorage only supports strings, not arrays
       // if you want to store arrays, look at JSON.parse and JSON.stringify
-      localStorage.setItem(this.title, JSON.stringify(this.element));
+      let myData = JSON.parse(localStorage.getItem("myData"));
+      if(myData == null){
+          myData = [];
+      }
+      myData.push(this.title);
+      console.log(myData);
+      localStorage.setItem(`myData`, JSON.stringify(myData));
     }
     
     remove(){
@@ -62,13 +68,16 @@ class Note {
       // HINT🤩
       // load all notes from storage here and add them to the screen
       // something like note.add() in a loop would be nice
-      var retrieveData = JSON.parse(localStorage.getItem(this.element));
-//      const note = new Set();
-//        console.log(this.storage);
-//      note.add(retrieveData);
-
-    }
-     
+      
+      let retrieveData = JSON.parse(localStorage.getItem(`myData`));
+        if (retrieveData.length > 0){
+            retrieveData.forEach(title => {
+                let note = new Note(title);
+                note.add();
+            });
+            }
+        }
+      
     createNote(e){
       // this function should create a new note by using the Note() class
       
