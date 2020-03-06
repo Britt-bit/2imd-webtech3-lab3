@@ -2,7 +2,6 @@ class Note {
     constructor(title) {
       this.title = title;
       this.element = this.createElement(title);
-
     }
     
     createElement(title){
@@ -20,9 +19,11 @@ class Note {
       newNote.appendChild(newA);
       
       // HINT🤩 
-      //a.addEventListener('click', this.remove.bind(newNote));
-      
+      let removeNote = newNote.querySelector(`.card-remove`);
+      removeNote.addEventListener(`click`, this.remove.bind(newNote));
       return newNote;
+      //a.addEventListener('click', this.remove.bind(newNote));
+
     }
     
     add(){
@@ -47,11 +48,20 @@ class Note {
     remove(){
       // HINT🤩 the meaning of 'this' was set by bind() in the createElement function
       // in this function, 'this' will refer to the current note element
-        console.log(this);
+ //     let removeNote = this;
+ //     console.log(removeNote);
 
-    } 
+      let myData = JSON.parse(localStorage.getItem("myData"));
+      myData = myData.splice(this.title, myData);
+      console.log(myData);
+      localStorage.removeItem(`myData`, JSON.stringify(myData));
+      myData.remove();
+
+// alles is weg -> splice gebruiken
+
   }
   
+}
   class App {
     constructor() {
       console.log("👊🏼 The Constructor!");
@@ -62,6 +72,7 @@ class Note {
         this.btnAdd = document.querySelector("#btnAddNote");
         this.btnAdd.addEventListener("click", this.createNote.bind(this));
         this.loadNotesFromStorage();
+
     }
     
     loadNotesFromStorage() {
