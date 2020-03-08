@@ -81,7 +81,7 @@ class Note {
       // load all notes from storage here and add them to the screen
       // something like note.add() in a loop would be nice
       
-      let retrieveData = JSON.parse(window.localStorage.getItem(`myData`));
+      let retrieveData = JSON.parse(localStorage.getItem(`myData`));
       console.log("4 " + retrieveData);
         if (retrieveData.length > 0){
             retrieveData.forEach(title => {
