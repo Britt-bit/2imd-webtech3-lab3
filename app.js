@@ -46,45 +46,19 @@ class Note {
       console.log("1 " + myData);
         
       localStorage.setItem(`myData`, JSON.stringify(myData));
-
-      console.log("2 " + myData);
     }
     
     remove(){
       // HINT🤩 the meaning of 'this' was set by bind() in the createElement function
       // in this function, 'this' will refer to the current note element
-      let removeLink = this;
-      console.log(removeLink);
-      removeLink.addEventListener(`click`, e => {
-        e.preventDefault();
-      });
       let localData = JSON.parse(localStorage.getItem(`myData`));
       let title = this.querySelector(`p`).innerHTML;
       let ArrayIndex = localData.indexOf(title);
       localData.splice(ArrayIndex, 1);
       localStorage.setItem(`myData`, JSON.stringify(localData));
-      removeLink.remove();
-      
-      
-
-
-/*      let thisFuck = JSON.parse(window.localStorage.getItem(`myData`));
-      let title = this.querySelector(`p`).innerHTML;
-      console.log("mydata " + thisFuck);
-      console.log("title " + title);
-
-      if(title != null){
-        //let spliced = myData.splice(this.title, myData);
-        //console.log("spliced " + spliced);
-
-        JSON.parse(window.localStorage.removeItem(myData));
-        this.remove();
-        console.log(this);
-      }
-*/
+      this.remove();
       
       //localStorage.removeItem(`myData`, JSON.stringify(myData));
-
 
   }
   
