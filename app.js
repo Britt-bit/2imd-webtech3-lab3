@@ -2,7 +2,6 @@ class Note {
     constructor(title) {
       this.title = title;
       this.element = this.createElement(title);
-
     }
     
     createElement(title){
@@ -28,16 +27,10 @@ class Note {
     }
     
     add(){
-      // HINT🤩
-      // this function should append the note to the screen somehow
       document.querySelector(".notes").appendChild(this.element);
     }
     
     saveToStorage(){
-      // HINT🤩
-      // localStorage only supports strings, not arrays
-      // if you want to store arrays, look at JSON.parse and JSON.stringify
-   
       let myData = JSON.parse(localStorage.getItem(`myData`));
       if(myData == null){
           myData = [];
@@ -49,8 +42,6 @@ class Note {
     }
     
     remove(){
-      // HINT🤩 the meaning of 'this' was set by bind() in the createElement function
-      // in this function, 'this' will refer to the current note element
       let localData = JSON.parse(localStorage.getItem(`myData`));
       let title = this.querySelector(`p`).innerHTML;
       let ArrayIndex = localData.indexOf(title);
@@ -59,7 +50,6 @@ class Note {
       this.remove();
       
       //localStorage.removeItem(`myData`, JSON.stringify(myData));
-
   }
   
 }
@@ -72,15 +62,25 @@ class Note {
       // pressing the enter key should also work
         this.btnAdd = document.querySelector("#btnAddNote");
         this.btnAdd.addEventListener("click", this.createNote.bind(this));
+        
+
         this.loadNotesFromStorage();
+
+
+        document.querySelector(`#txtAddNote`).addEventListener(`keydown`, enter => {
+          if(enter.keyCode === 13) {
+            enter.preventDefault();
+            console.log(enter);
+            document.querySelector(`#btnAddNote`).click();
+            return true;
+          }
+        });
+
+
 
     }
     
     loadNotesFromStorage() {
-      // HINT🤩
-      // load all notes from storage here and add them to the screen
-      // something like note.add() in a loop would be nice
-      
       let retrieveData = JSON.parse(localStorage.getItem(`myData`));
       console.log("4 " + retrieveData);
         if (retrieveData.length > 0){
@@ -102,11 +102,12 @@ class Note {
        let note = new Note(text);
         note.add();
         note.saveToStorage();
-        //this.reset();
+        this.reset();
     }
     
     reset(){
       // this function should reset the form 
+      document.querySelector("#txtAddNote").value = ('');
     }
     
   }
