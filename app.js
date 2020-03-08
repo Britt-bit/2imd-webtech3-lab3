@@ -2,6 +2,7 @@ class Note {
     constructor(title) {
       this.title = title;
       this.element = this.createElement(title);
+
     }
     
     createElement(title){
@@ -36,28 +37,54 @@ class Note {
       // HINT🤩
       // localStorage only supports strings, not arrays
       // if you want to store arrays, look at JSON.parse and JSON.stringify
-      let myData = JSON.parse(localStorage.getItem("myData"));
+   
+      let myData = JSON.parse(localStorage.getItem(`myData`));
       if(myData == null){
           myData = [];
       }
       myData.push(this.title);
-      console.log(myData);
+      console.log("1 " + myData);
+        
       localStorage.setItem(`myData`, JSON.stringify(myData));
+
+      console.log("2 " + myData);
     }
     
     remove(){
       // HINT🤩 the meaning of 'this' was set by bind() in the createElement function
       // in this function, 'this' will refer to the current note element
- //     let removeNote = this;
- //     console.log(removeNote);
+      let removeLink = this;
+      console.log(removeLink);
+      removeLink.addEventListener(`click`, e => {
+        e.preventDefault();
+      });
+      let localData = JSON.parse(localStorage.getItem(`myData`));
+      let title = this.querySelector(`p`).innerHTML;
+      let ArrayIndex = localData.indexOf(title);
+      localData.splice(ArrayIndex, 1);
+      localStorage.setItem(`myData`, JSON.stringify(localData));
+      removeLink.remove();
+      
+      
 
-      let myData = JSON.parse(localStorage.getItem("myData"));
-      myData = myData.splice(this.title, myData);
-      console.log(myData);
-      localStorage.removeItem(`myData`, JSON.stringify(myData));
-      myData.remove();
 
-// alles is weg -> splice gebruiken
+/*      let thisFuck = JSON.parse(window.localStorage.getItem(`myData`));
+      let title = this.querySelector(`p`).innerHTML;
+      console.log("mydata " + thisFuck);
+      console.log("title " + title);
+
+      if(title != null){
+        //let spliced = myData.splice(this.title, myData);
+        //console.log("spliced " + spliced);
+
+        JSON.parse(window.localStorage.removeItem(myData));
+        this.remove();
+        console.log(this);
+      }
+*/
+      
+      //localStorage.removeItem(`myData`, JSON.stringify(myData));
+
 
   }
   
@@ -80,7 +107,8 @@ class Note {
       // load all notes from storage here and add them to the screen
       // something like note.add() in a loop would be nice
       
-      let retrieveData = JSON.parse(localStorage.getItem(`myData`));
+      let retrieveData = JSON.parse(window.localStorage.getItem(`myData`));
+      console.log("4 " + retrieveData);
         if (retrieveData.length > 0){
             retrieveData.forEach(title => {
                 let note = new Note(title);
